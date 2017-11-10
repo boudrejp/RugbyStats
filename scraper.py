@@ -9,3 +9,23 @@ import pandas as pd
 import numpy as np
 import urllib
 
+print "libraries successfully imported"
+
+def table_url_page(page):
+	return 'http://stats.espnscrum.com/statsguru/rugby/stats/index.html?class=1;page=' + page +
+		 ';spanmax1=08+Nov+2017;spanmax2=08+Nov+2017;spanmin1=08+Nov+2007;spanmin2=08+Nov+2015;' + 
+		 'spanval1=span;spanval2=span;template=results;type=player;view=match'
+		 
+###data that we will end up caring about...
+
+player = []
+country = []
+position = []
+points = []
+tries = []
+conv = []
+pens = []
+drops = []
+win = []
+versus = []
+
