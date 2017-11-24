@@ -74,8 +74,30 @@ unique(df[is.na(df$opposition_tier), "opposition"])
 
 ### there's a lot of national developmental teams (NZ Maori, Argentina XV, etc..)
 ### for consistency, we will delete these
+emerging.natl.teams <- unique(df[is.na(df$opposition_tier), "opposition"])[c(c(10:15),c(17:26))]
 
-df <- df[unique(df$opposition(df[is.na(df$opposition_tier), "opposition"]))[c(11:26)],]
+
+for (i in 1:length(emerging.natl.teams)){
+  rows.to.del <- which(df$opposition == emerging.natl.teams[i])
+  df <- df[-rows.to.del,]
+}
+
+### USA is tier 2
+df$opposition_tier[df$opposition == "USA"] <- 2
+
+### make separate tier barbarians/lions
+df$opposition_tier[df$opposition == "Barbarians" | df$opposition == "Lions"] <- "Lions/Barb"
+
+### remaining are all tier 3
+df$opposition_tier[is.na(df$opposition_tier)] <- 3
+
+### let's make columns for the amount of points scored per each type
+
+df$points_tries <- df$tries * 5
+df$points_convs <- df$conv * 2
+df$points_pens <- df$penalties * 3
+df$points_drops <- df$drop_kicks * 3
+
 
 
 write.csv(df, file = "C:/Users/John/Documents/GitHub/RugbyStats/preprocessed.csv")
